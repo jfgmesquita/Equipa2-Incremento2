@@ -17,8 +17,8 @@ public class Pagamento {
 	private int id;
 	
 	private double valor;
-	private String origem;
-	private String destino;
+	private Cliente origemCliente;
+	private Profissional destinoProfissional;
 	
 	@Enumerated(EnumType.STRING)
 	private MetodoPagamento metodo;
@@ -26,10 +26,10 @@ public class Pagamento {
 	@Enumerated(EnumType.STRING)
 	private StatusPagamento status;
 	
-    public Pagamento(double valor, Cliente origem, Profissional destino, MetodoPagamento metodo) {
+    public Pagamento(double valor, Cliente origemCliente, Profissional destinoProfissional, MetodoPagamento metodo) {
         this.valor = valor;
-        this.origem = origem.getNome();
-        this.destino = destino.getNome();
+        this.origemCliente = origemCliente;
+        this.destinoProfissional = destinoProfissional;
         this.metodo = metodo;
         status = StatusPagamento.PENDENTE;
         

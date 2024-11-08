@@ -1,5 +1,7 @@
 package Equipa2.Incremento2.model;
 
+import java.util.UUID;
+
 import Equipa2.Incremento2.model.enums.*;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,8 +15,8 @@ import lombok.Setter;
 public class Pagamento {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 	
 	private double valor;
 	private Cliente origemCliente;

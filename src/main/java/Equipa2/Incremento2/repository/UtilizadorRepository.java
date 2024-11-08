@@ -6,7 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import Equipa2.Incremento2.model.Utilizador;
 
-public interface UtilizadorRepository extends JpaRepository<Utilizador, UUID> {
-
-    
-}
+public interface UtilizadorRepository extends JpaRepository<Utilizador, UUID> {}

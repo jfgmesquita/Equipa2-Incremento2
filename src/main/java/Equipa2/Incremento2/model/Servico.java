@@ -1,6 +1,7 @@
 package Equipa2.Incremento2.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,8 @@ import lombok.Setter;
 @Table(name = "Servico")
 public class Servico {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String titulo;
 

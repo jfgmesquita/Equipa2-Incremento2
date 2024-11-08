@@ -1,6 +1,8 @@
 package Equipa2.Incremento2.model;
 
 import java.io.Serializable;
+import java.util.UUID;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +18,8 @@ import lombok.Setter;
 public class Avaliacao implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private int valor;
     
     @ManyToOne

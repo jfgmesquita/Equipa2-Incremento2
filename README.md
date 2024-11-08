@@ -1,4 +1,4 @@
-# Programming Laboratory Project in Java - Increment 2
+# Programming Laboratory Project in Java - Component 2
 
 ## Scrum (Agile)
 

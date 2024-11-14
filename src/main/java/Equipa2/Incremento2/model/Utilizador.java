@@ -20,7 +20,7 @@ import Equipa2.Incremento2.model.enums.UserType;
 @Entity
 @Table(name = "utilizador")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Utilizador {
+public abstract class Utilizador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

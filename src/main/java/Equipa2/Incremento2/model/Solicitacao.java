@@ -63,8 +63,7 @@ public class Solicitacao {
      * Construtor vazio para a classe Solicitacao.
      * Inicializa todas variáveis de objeto como null.
      */
-    public Solicitacao() {
-    }
+    public Solicitacao() {}
 
     /**
      * Retorna uma representação em string da solicitação.

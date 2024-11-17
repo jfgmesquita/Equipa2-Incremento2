@@ -28,7 +28,7 @@ public class Profissional extends Utilizador {
 
     @Column(name = "metodo_pagamento")
     @Enumerated(EnumType.STRING)
-    private MetodoPagamento metPag;
+    private MetodoPagamento formaDePagamento;
 
     @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL)
     private List<Servico> servicos;
@@ -48,14 +48,13 @@ public class Profissional extends Utilizador {
      * @param morada a morada do profissional
      * @param especialidade a especialidade do profissional
      * @param experiencia a experiência do profissional em anos
-     * @param valorHora o valor cobrado por hora pelo profissional
-     * @param metPag o método de pagamento que o profissional deseja receber
+     * @param formaDePagamento o método de pagamento que o profissional deseja receber
      */
-    public Profissional(String nome, String email, String password, String morada, UserType userType, String especialidade, int experiencia, MetodoPagamento metPag) {
+    public Profissional(String nome, String email, String password, String morada, UserType userType, String especialidade, int experiencia, MetodoPagamento formaDePagamento) {
         super(nome, email, password, morada, userType);
         this.especialidade = especialidade;
         this.experiencia = experiencia;
-        this.metPag = metPag;
+        this.formaDePagamento = formaDePagamento;
         servicos = new ArrayList<>();
         solicitacoes = new ArrayList<>();
         avaliacoes = new ArrayList<>();

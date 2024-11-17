@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import Equipa2.Incremento2.model.Utilizador;
 @Repository
-public interface UtilizadorRepository extends JpaRepository<Utilizador, UUID> {}
+public interface UtilizadorRepository extends JpaRepository<Utilizador, UUID> {
+    public Utilizador findByEmail(String email);
+}

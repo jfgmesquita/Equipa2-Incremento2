@@ -1,6 +1,5 @@
 package Equipa2.Incremento2.model;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -15,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Avaliacao implements Serializable {
+public class Avaliacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

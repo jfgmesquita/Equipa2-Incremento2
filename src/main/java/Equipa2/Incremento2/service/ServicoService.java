@@ -27,6 +27,14 @@ public class ServicoService {
         return servicoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado com o ID: " + id));
     }
 
+    public List<Servico> findAllByProfissionalId(UUID profissionalId){
+        if (profissionalId == null) {
+            throw new IllegalArgumentException("ID não pode ser nulo.");
+        }
+
+        return servicoRepository.findAllByProfissionalId(profissionalId);
+    }
+
     public Servico save(Servico servico) {
         if (servico == null) {
             throw new IllegalArgumentException("Serviço não pode ser nulo.");

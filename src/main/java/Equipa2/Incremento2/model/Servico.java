@@ -23,7 +23,7 @@ public class Servico {
     private String titulo;
 
     private String descricao;
-    private LocalDateTime data;
+    private String data;
     private double valorHora;
 
     @ManyToOne(cascade = CascadeType.ALL)

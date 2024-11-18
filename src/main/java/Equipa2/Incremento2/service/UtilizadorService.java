@@ -3,6 +3,14 @@ package Equipa2.Incremento2.service;
 import java.util.List;
 import java.util.UUID;
 
+import Equipa2.Incremento2.model.Admin;
+import Equipa2.Incremento2.model.Cliente;
+import Equipa2.Incremento2.model.Profissional;
+import Equipa2.Incremento2.model.dto.UtilizadorDTO;
+import Equipa2.Incremento2.model.enums.UserType;
+import Equipa2.Incremento2.repository.AdminRepository;
+import Equipa2.Incremento2.repository.ClienteRepository;
+import Equipa2.Incremento2.repository.ProfissionalRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +22,15 @@ import Equipa2.Incremento2.exceptions.ResourceNotFoundException;
 public class UtilizadorService {
     @Autowired
     private UtilizadorRepository utilizadorRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ProfissionalRepository profissionalRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     public List<Utilizador> findAll() {
         return utilizadorRepository.findAll();
@@ -27,14 +44,34 @@ public class UtilizadorService {
         return utilizadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Utilizador não encontrado com o ID: " + id));
     }
 
-    public Utilizador save(Utilizador utilizador) {
-        if (utilizador == null) {
-            throw new IllegalArgumentException("Utilizador não pode ser nulo.");
+    public Utilizador findByEmail(String email) {
+        return utilizadorRepository.findByEmail(email);
+    }
+
+    public Cliente saveCliente(Cliente cliente) {
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente não pode ser nulo.");
         }
 
-        return utilizadorRepository.save(utilizador);
+        return clienteRepository.save(cliente);
     }
-    
+
+    public Profissional saveProfissional(Profissional pro) {
+        if (pro == null) {
+            throw new IllegalArgumentException("Profissional não pode ser nulo.");
+        }
+
+        return profissionalRepository.save(pro);
+    }
+
+    public Admin saveAdmin(Admin admin) {
+        if (admin == null) {
+            throw new IllegalArgumentException("Admin não pode ser nulo.");
+        }
+
+        return adminRepository.save(admin);
+    }
+
     public Utilizador update(UUID id, Utilizador utilizadorDetails) {
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo.");

@@ -17,7 +17,7 @@ import Equipa2.Incremento2.service.UtilizadorService;
 
 @RestController
 @RequestMapping("/api/utilizadores")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class UtilizadorController {
     @Autowired
     private UtilizadorService utilizadorService;

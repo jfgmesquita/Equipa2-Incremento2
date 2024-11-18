@@ -28,8 +28,8 @@ public class UtilizadorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Utilizador> getUtilizadorById(@PathVariable UUID id) {
-        Utilizador utilizador = utilizadorService.findById(id);
+    public ResponseEntity<UtilizadorDTO> getUtilizadorById(@PathVariable UUID id) {
+        UtilizadorDTO utilizador = utilizadorService.findDTOById(id);
 
         if (utilizador == null) {
             return ResponseEntity.notFound().build();

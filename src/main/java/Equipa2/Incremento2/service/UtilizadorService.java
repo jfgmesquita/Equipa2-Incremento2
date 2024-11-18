@@ -44,6 +44,22 @@ public class UtilizadorService {
         return utilizadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Utilizador não encontrado com o ID: " + id));
     }
 
+    public UtilizadorDTO findDTOById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID não pode ser nulo.");
+        }
+
+        Utilizador uti = utilizadorRepository.findById(id).get();
+
+        UtilizadorDTO utilizadorDTO = new UtilizadorDTO();
+        utilizadorDTO.setNome(uti.getNome());
+        utilizadorDTO.setEmail(uti.getEmail());
+        utilizadorDTO.setMorada(uti.getMorada());
+        utilizadorDTO.setUserType(uti.getUserType());
+
+        return utilizadorDTO;
+    }
+
     public Utilizador findByEmail(String email) {
         return utilizadorRepository.findByEmail(email);
     }

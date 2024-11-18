@@ -21,5 +21,5 @@ public class ServicoDTO {
     private String data;
     private double valorHora;
 
-    private UUID profissional;
+    private UUID profissionalId;
 }

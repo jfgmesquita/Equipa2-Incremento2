@@ -1,5 +1,6 @@
 package Equipa2.Incremento2.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,8 +27,22 @@ public class ServicoController {
     private UtilizadorRepository utilizadorRepository;
 
     @GetMapping
-    public List<Servico> getAllServicos() {
-        return servicoService.findAll();
+    public List<ServicoDTO> getAllServicos() {
+        List<Servico> servicos = servicoService.findAll();
+
+        List<ServicoDTO> servicoDTOs = new ArrayList<>();
+
+        for(Servico ser: servicos){
+            servicoDTOs.add(new ServicoDTO(
+                    ser.getTitulo(),
+                    ser.getDescricao(),
+                    ser.getData(),
+                    ser.getValorHora(),
+                    ser.getProfissional().getId()
+            ));
+        }
+
+        return servicoDTOs;
     }
 
     @GetMapping("/{id}")
@@ -42,15 +57,27 @@ public class ServicoController {
     }
 
     @GetMapping("/profissional/{profissionalId}")
-    public ResponseEntity<List<Servico>> getAllByProfissionalId(@PathVariable UUID profissionalId){
+    public ResponseEntity<List<ServicoDTO>> getAllByProfissionalId(@PathVariable UUID profissionalId){
         List<Servico> servicos = servicoService.findAllByProfissionalId(profissionalId);
 
-        return ResponseEntity.ok(servicos);
+        List<ServicoDTO> servicoDTOs = new ArrayList<>();
+
+        for(Servico ser: servicos){
+            servicoDTOs.add(new ServicoDTO(
+                    ser.getTitulo(),
+                    ser.getDescricao(),
+                    ser.getData(),
+                    ser.getValorHora(),
+                    ser.getProfissional().getId()
+            ));
+        }
+
+        return ResponseEntity.ok(servicoDTOs);
     }
 
     @PostMapping
-    public Servico createServico(@RequestBody ServicoDTO servico) {
-        Optional<Utilizador> pro = utilizadorRepository.findById(servico.getProfissional());
+    public ServicoDTO createServico(@RequestBody ServicoDTO servico) {
+        Optional<Utilizador> pro = utilizadorRepository.findById(servico.getProfissionalId());
 
         Servico ser = new Servico();
         ser.setTitulo(servico.getTitulo());
@@ -59,7 +86,9 @@ public class ServicoController {
         ser.setValorHora(servico.getValorHora());
         ser.setProfissional((Profissional) pro.get());
 
-        return servicoService.save(ser);
+        servicoService.save(ser);
+
+        return servico;
     }
 
     @PutMapping("/{id}")

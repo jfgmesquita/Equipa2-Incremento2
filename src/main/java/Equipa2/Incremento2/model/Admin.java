@@ -1,7 +1,6 @@
 package Equipa2.Incremento2.model;
 
 import jakarta.persistence.*;
-import Equipa2.Incremento2.model.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

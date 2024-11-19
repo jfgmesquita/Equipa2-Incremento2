@@ -12,6 +12,7 @@ import Equipa2.Incremento2.model.Utilizador;
 import Equipa2.Incremento2.model.dto.ServicoDTO;
 import Equipa2.Incremento2.model.dto.UtilizadorDTO;
 import Equipa2.Incremento2.service.UtilizadorService;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,16 @@ public class ServicoController {
 
         List<ServicoDTO> dtos = new ArrayList<>();
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+
         for (Servico ser : servicos) {
+            String formattedDate = ser.getData().format(dtf);
             dtos.add(new ServicoDTO(
                     ser.getId(),
                     ser.getTitulo(),
                     ser.getDescricao(),
-                    ser.getData(),
+                    formattedDate,
                     ser.getValorHora(),
                     utilizadorService.findDTOById(ser.getProfissional().getId())
             ));
@@ -72,12 +77,15 @@ public class ServicoController {
 
         List<ServicoDTO> servicoDTOs = new ArrayList<>();
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
         for (Servico ser : servicos) {
+            String formattedDate = ser.getData().format(dtf);
             servicoDTOs.add(new ServicoDTO(
                     ser.getId(),
                     ser.getTitulo(),
                     ser.getDescricao(),
-                    ser.getData(),
+                    formattedDate,
                     ser.getValorHora(),
                     utilizadorService.findDTOById(ser.getProfissional().getId())
             ));
@@ -93,19 +101,17 @@ public class ServicoController {
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-        String formattedDate = date.format(dtf);
-
         Servico ser = new Servico();
         ser.setTitulo(servico.getTitulo());
         ser.setDescricao(servico.getDescricao());
-        ser.setData(formattedDate);
+        ser.setData(date);
         ser.setValorHora(servico.getValorHora());
         ser.setProfissional(pro);
 
         servicoService.save(ser);
 
         servico.setId(ser.getId());
-        servico.setData(formattedDate);
+        servico.setData(date.format(dtf));
         servico.setProfissional(utilizadorService.findDTOById(pro.getId()));
 
         return ResponseEntity.ok().body(servico);

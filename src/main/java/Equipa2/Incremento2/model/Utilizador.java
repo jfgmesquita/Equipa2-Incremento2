@@ -2,21 +2,22 @@ package Equipa2.Incremento2.model;
 
 import java.io.Serializable;
 import java.util.UUID;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import Equipa2.Incremento2.model.enums.UserType;
 
 /**
  * Classe que representa um utilizador.
  */
+@NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "utilizador")
@@ -37,7 +38,7 @@ public abstract class Utilizador implements Serializable {
     private String morada;
 
     @Enumerated(EnumType.STRING)
-    private UserType UserType;
+    private UserType userType;
 
     /**
      * Construtor que inicializa um novo utilizador com os dados fornecidos.
@@ -47,13 +48,14 @@ public abstract class Utilizador implements Serializable {
      * @param email    Email do utilizador.
      * @param password Password do utilizador.
      * @param morada   Morada do utilizador.
+     * @param userType Tipo de utilizador.
      */
     public Utilizador(String nome, String email, String password, String morada, UserType userType) {
-       
         this.nome = nome;
         this.email = email;
         this.password = password;
         this.morada = morada;
-        this.UserType = userType;
+        this.userType = userType;
     }
+    
 }

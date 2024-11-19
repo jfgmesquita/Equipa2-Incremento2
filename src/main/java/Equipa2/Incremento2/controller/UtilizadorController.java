@@ -1,32 +1,47 @@
 package Equipa2.Incremento2.controller;
 
-import java.util.List;
 import java.util.UUID;
+import java.util.List;
 
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import Equipa2.Incremento2.model.enums.UserType;
 import Equipa2.Incremento2.model.Admin;
 import Equipa2.Incremento2.model.Cliente;
 import Equipa2.Incremento2.model.Profissional;
-import Equipa2.Incremento2.model.dto.UtilizadorDTO;
-import Equipa2.Incremento2.model.enums.UserType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import Equipa2.Incremento2.model.Utilizador;
+import Equipa2.Incremento2.model.dto.UtilizadorDTO;
 import Equipa2.Incremento2.service.UtilizadorService;
 
+/**
+ * Controlador para operações relacionadas com a entidade Utilizador.
+ */
 @RestController
 @RequestMapping("/api/utilizadores")
 @CrossOrigin(origins = "*")
 public class UtilizadorController {
+
     @Autowired
     private UtilizadorService utilizadorService;
 
+    /**
+     * Encontra todos os utilizadores.
+     *
+     * @return uma lista de todos os utilizadores
+     */
     @GetMapping
     public List<Utilizador> getAllUtilizadores() {
         return utilizadorService.findAll();
     }
 
+    /**
+     * Encontra um utilizador pelo ID.
+     *
+     * @param id o ID do utilizador
+     * @return o utilizador com o ID fornecido
+     */
     @GetMapping("/{id}")
     public ResponseEntity<UtilizadorDTO> getUtilizadorById(@PathVariable UUID id) {
         UtilizadorDTO utilizador = utilizadorService.findDTOById(id);
@@ -38,6 +53,12 @@ public class UtilizadorController {
         return ResponseEntity.ok(utilizador);
     }
 
+    /**
+     * Cria um utilizador.
+     *
+     * @param utilizador o utilizador a ser criado
+     * @return o utilizador criado
+     */
     @PostMapping
     public ResponseEntity<UtilizadorDTO> createUtilizador(@RequestBody UtilizadorDTO utilizador){
 
@@ -109,6 +130,13 @@ public class UtilizadorController {
 
     }
 
+    /**
+     * Atualiza um utilizador.
+     *
+     * @param id o ID do utilizador
+     * @param utilizadorDetails os detalhes do utilizador a ser atualizado
+     * @return o utilizador atualizado
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Utilizador> updateUtilizador(@PathVariable UUID id, @RequestBody UtilizadorDTO utilizadorDetails) {
         Utilizador utilizador = utilizadorService.findById(id);
@@ -158,6 +186,12 @@ public class UtilizadorController {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Apaga um utilizador.
+     *
+     * @param id o ID do utilizador
+     * @return uma resposta de sucesso ou erro
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUtilizador(@PathVariable UUID id) {
         Utilizador utilizador = utilizadorService.findById(id);
@@ -169,4 +203,5 @@ public class UtilizadorController {
         utilizadorService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
 }

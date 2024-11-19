@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import Equipa2.Incremento2.model.*;
 import Equipa2.Incremento2.model.dto.SolicitacaoDTO;
+import Equipa2.Incremento2.model.enums.StatusServico;
 import Equipa2.Incremento2.model.enums.UserType;
 import Equipa2.Incremento2.service.ServicoService;
 import Equipa2.Incremento2.service.UtilizadorService;
@@ -139,18 +140,27 @@ public class SolicitacaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Solicitacao> updateSolicitacao(@PathVariable UUID id, @RequestBody Solicitacao solicitacaoDetails) {
+    public ResponseEntity<SolicitacaoDTO> updateStatusSolicitacao(@PathVariable UUID id, @RequestBody SolicitacaoDTO solicitacaoDTO) {
         Solicitacao solicitacao = solicitacaoService.findById(id);
 
         if (solicitacao == null) {
             return ResponseEntity.notFound().build();
         }
 
-        solicitacao.setStatus(solicitacaoDetails.getStatus());
-        solicitacao.setData(solicitacaoDetails.getData());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        solicitacao.setStatus(solicitacaoDTO.getStatus());
         Solicitacao updatedSolicitacao = solicitacaoService.save(solicitacao);
 
-        return ResponseEntity.ok(updatedSolicitacao);
+        SolicitacaoDTO dto = new SolicitacaoDTO(
+                solicitacao.getId(),
+                solicitacao.getStatus(),
+                utilizadorService.findDTOById(solicitacao.getCliente().getId()),
+                servicoService.findDTOById(solicitacao.getServico().getId()),
+                solicitacao.getData().format(dtf)
+        );
+
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")

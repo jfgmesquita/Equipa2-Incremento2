@@ -2,7 +2,6 @@ package Equipa2.Incremento2.controller;
 
 import Equipa2.Incremento2.model.Utilizador;
 import Equipa2.Incremento2.model.dto.LoginRequestDTO;
-import Equipa2.Incremento2.model.dto.ServicoDTO;
 import Equipa2.Incremento2.model.dto.UtilizadorDTO;
 import Equipa2.Incremento2.service.UtilizadorService;
 import org.springframework.beans.factory.annotation.Autowired;

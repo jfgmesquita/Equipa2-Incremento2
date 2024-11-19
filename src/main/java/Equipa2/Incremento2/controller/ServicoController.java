@@ -56,7 +56,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             dtos.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTitulo(),
+                    ser.getTipo(),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -79,7 +79,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             servicoDTOs.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTitulo(),
+                    ser.getTipo(),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -98,7 +98,7 @@ public class ServicoController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         Servico ser = new Servico();
-        ser.setTitulo(servico.getTitulo());
+        ser.setTipo(servico.getTipo());
         ser.setDescricao(servico.getDescricao());
         ser.setData(date);
         ser.setValorHora(servico.getValorHora());
@@ -121,7 +121,7 @@ public class ServicoController {
             return ResponseEntity.notFound().build();
         }
 
-        servico.setTitulo(servicoDetails.getTitulo());
+        servico.setTipo(servicoDetails.getTipo());
         servico.setDescricao(servicoDetails.getDescricao());
         servico.setData(servicoDetails.getData());
         servico.setValorHora(servicoDetails.getValorHora());

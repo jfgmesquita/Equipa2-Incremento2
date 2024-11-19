@@ -1,5 +1,7 @@
 package Equipa2.Incremento2.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,13 +46,33 @@ public class ServicoController {
         return ResponseEntity.ok(servico);
     }
 
+    @GetMapping
+    public ResponseEntity<List<ServicoDTO>> getAll() {
+        List<Servico> servicos = servicoService.findAll();
+
+        List<ServicoDTO> dtos = new ArrayList<>();
+
+        for (Servico ser : servicos) {
+            dtos.add(new ServicoDTO(
+                    ser.getId(),
+                    ser.getTitulo(),
+                    ser.getDescricao(),
+                    ser.getData(),
+                    ser.getValorHora(),
+                    utilizadorService.findDTOById(ser.getProfissional().getId())
+            ));
+        }
+
+        return ResponseEntity.ok().body(dtos);
+    }
+
     @GetMapping("/profissional/{profissionalId}")
-    public ResponseEntity<List<ServicoDTO>> getAllByProfissionalId(@PathVariable UUID profissionalId){
+    public ResponseEntity<List<ServicoDTO>> getAllByProfissionalId(@PathVariable UUID profissionalId) {
         List<Servico> servicos = servicoService.findAllByProfissionalId(profissionalId);
 
         List<ServicoDTO> servicoDTOs = new ArrayList<>();
 
-        for(Servico ser: servicos){
+        for (Servico ser : servicos) {
             servicoDTOs.add(new ServicoDTO(
                     ser.getId(),
                     ser.getTitulo(),
@@ -68,24 +90,23 @@ public class ServicoController {
     public ResponseEntity<ServicoDTO> createServico(@RequestBody ServicoDTO servico) {
         Profissional pro = (Profissional) utilizadorService.findById(servico.getProfissional().getId());
 
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        String formattedDate = date.format(dtf);
+
         Servico ser = new Servico();
         ser.setTitulo(servico.getTitulo());
         ser.setDescricao(servico.getDescricao());
-        ser.setData(servico.getData());
+        ser.setData(formattedDate);
         ser.setValorHora(servico.getValorHora());
         ser.setProfissional(pro);
 
         servicoService.save(ser);
 
         servico.setId(ser.getId());
-        servico.getProfissional().setNome(pro.getNome());
-        servico.getProfissional().setEmail(pro.getEmail());
-        servico.getProfissional().setPassword(pro.getNome());
-        servico.getProfissional().setMorada(pro.getMorada());
-        servico.getProfissional().setUserType(pro.getUserType());
-        servico.getProfissional().setFormaDePagamento(pro.getFormaDePagamento());
-        servico.getProfissional().setEspecialidade(pro.getNome());
-        servico.getProfissional().setExperiencia(pro.getExperiencia());
+        servico.setData(formattedDate);
+        servico.setProfissional(utilizadorService.findDTOById(pro.getId()));
 
         return ResponseEntity.ok().body(servico);
     }
@@ -114,7 +135,7 @@ public class ServicoController {
         if (servico == null) {
             return ResponseEntity.notFound().build();
         }
-        
+
         servicoService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

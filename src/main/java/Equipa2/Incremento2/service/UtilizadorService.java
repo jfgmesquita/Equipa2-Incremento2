@@ -44,6 +44,40 @@ public class UtilizadorService {
         return utilizadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Utilizador não encontrado com o ID: " + id));
     }
 
+    public UtilizadorDTO findDTOById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID não pode ser nulo.");
+        }
+
+        Utilizador uti = utilizadorRepository.findById(id).get();
+
+        UtilizadorDTO utilizadorDTO = new UtilizadorDTO();
+        utilizadorDTO.setId(uti.getId());
+        utilizadorDTO.setNome(uti.getNome());
+        utilizadorDTO.setEmail(uti.getEmail());
+        utilizadorDTO.setPassword(uti.getPassword());
+        utilizadorDTO.setMorada(uti.getMorada());
+        utilizadorDTO.setUserType(uti.getUserType());
+        if(uti.getUserType() == UserType.CLIENTE){
+            Cliente cli = (Cliente) uti;
+            utilizadorDTO.setFormaDePagamento(cli.getFormaDePagamento());
+        }
+
+        if (uti.getUserType() == UserType.PROFISSIONAL) {
+            Profissional pro = (Profissional) uti;
+            utilizadorDTO.setFormaDePagamento(pro.getFormaDePagamento());
+            utilizadorDTO.setEspecialidade(pro.getEspecialidade());
+            utilizadorDTO.setExperiencia(pro.getExperiencia());
+        }
+
+        if (uti.getUserType() == UserType.ADMINISTRADOR){
+            Admin adm = (Admin) uti;
+            utilizadorDTO.setCodigo(adm.getCodigo());
+        }
+
+        return utilizadorDTO;
+    }
+
     public Utilizador findByEmail(String email) {
         return utilizadorRepository.findByEmail(email);
     }

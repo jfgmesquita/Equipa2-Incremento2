@@ -28,8 +28,8 @@ public class UtilizadorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Utilizador> getUtilizadorById(@PathVariable UUID id) {
-        Utilizador utilizador = utilizadorService.findById(id);
+    public ResponseEntity<UtilizadorDTO> getUtilizadorById(@PathVariable UUID id) {
+        UtilizadorDTO utilizador = utilizadorService.findDTOById(id);
 
         if (utilizador == null) {
             return ResponseEntity.notFound().build();
@@ -39,7 +39,7 @@ public class UtilizadorController {
     }
 
     @PostMapping
-    public ResponseEntity<Utilizador> createUtilizador(@RequestBody UtilizadorDTO utilizador){
+    public ResponseEntity<UtilizadorDTO> createUtilizador(@RequestBody UtilizadorDTO utilizador){
 
         if(utilizador.getUserType() == UserType.CLIENTE){
             Cliente cliente = new Cliente();
@@ -50,7 +50,15 @@ public class UtilizadorController {
             cliente.setUserType(utilizador.getUserType());
             cliente.setFormaDePagamento(utilizador.getFormaDePagamento());
             utilizadorService.saveCliente(cliente);
-            return ResponseEntity.ok().body(cliente);
+            return ResponseEntity.ok().body(new UtilizadorDTO(
+                    cliente.getId(),
+                    cliente.getNome(),
+                    cliente.getEmail(),
+                    cliente.getPassword(),
+                    cliente.getMorada(),
+                    cliente.getUserType(),
+                    cliente.getFormaDePagamento()
+            ));
         }
 
         if(utilizador.getUserType() == UserType.PROFISSIONAL){
@@ -64,7 +72,17 @@ public class UtilizadorController {
             profissional.setEspecialidade(utilizador.getEspecialidade());
             profissional.setExperiencia(utilizador.getExperiencia());
             utilizadorService.saveProfissional(profissional);
-            return ResponseEntity.ok().body(profissional);
+            return ResponseEntity.ok().body(new UtilizadorDTO(
+                    profissional.getId(),
+                    profissional.getNome(),
+                    profissional.getEmail(),
+                    profissional.getPassword(),
+                    profissional.getMorada(),
+                    profissional.getUserType(),
+                    profissional.getFormaDePagamento(),
+                    profissional.getEspecialidade(),
+                    profissional.getExperiencia()
+            ));
         }
 
         if(utilizador.getUserType() == UserType.ADMINISTRADOR){
@@ -76,7 +94,15 @@ public class UtilizadorController {
             admin.setUserType(utilizador.getUserType());
             admin.setCodigo(utilizador.getCodigo());
             utilizadorService.saveAdmin(admin);
-            return ResponseEntity.ok().body(admin);
+            return ResponseEntity.ok().body(new UtilizadorDTO(
+                    admin.getId(),
+                    admin.getNome(),
+                    admin.getEmail(),
+                    admin.getPassword(),
+                    admin.getMorada(),
+                    admin.getUserType(),
+                    admin.getCodigo()
+            ));
         }
 
         return ResponseEntity.badRequest().build();

@@ -47,7 +47,6 @@ public class SolicitacaoService {
         Solicitacao solicitacao = solicitacaoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Solicitação não encontrada com o ID: " + id));
         
         solicitacao.setStatus(solicitacaoDetails.getStatus());
-        solicitacao.setMorada(solicitacaoDetails.getMorada());
         solicitacao.setData(solicitacaoDetails.getData());
 
         return solicitacaoRepository.save(solicitacao);

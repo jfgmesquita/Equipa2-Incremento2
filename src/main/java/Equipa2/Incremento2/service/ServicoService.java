@@ -1,12 +1,17 @@
 package Equipa2.Incremento2.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
+import Equipa2.Incremento2.model.*;
+import Equipa2.Incremento2.model.dto.ServicoDTO;
+import Equipa2.Incremento2.model.dto.UtilizadorDTO;
+import Equipa2.Incremento2.model.enums.UserType;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import Equipa2.Incremento2.model.Servico;
 import Equipa2.Incremento2.repository.ServicoRepository;
 import Equipa2.Incremento2.exceptions.ResourceNotFoundException;
 
@@ -15,8 +20,32 @@ public class ServicoService {
     @Autowired
     private ServicoRepository servicoRepository;
 
+    @Autowired
+    private UtilizadorService utilizadorService;
+
     public List<Servico> findAll() {
         return servicoRepository.findAll();
+    }
+
+    public ServicoDTO findDTOById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID não pode ser nulo.");
+        }
+
+        Servico ser = servicoRepository.findById(id).get();
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        String formattedDate = ser.getData().format(dtf);
+
+        ServicoDTO servicoDTO = new ServicoDTO();
+        servicoDTO.setId(ser.getId());
+        servicoDTO.setTitulo(ser.getTitulo());
+        servicoDTO.setDescricao(ser.getDescricao());
+        servicoDTO.setData(formattedDate);
+        servicoDTO.setProfissional(utilizadorService.findDTOById(ser.getProfissional().getId()));
+
+        return servicoDTO;
     }
 
     public Servico findById(UUID id) {
@@ -25,6 +54,14 @@ public class ServicoService {
         }
 
         return servicoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado com o ID: " + id));
+    }
+
+    public List<Servico> findAllByProfissionalId(UUID profissionalId){
+        if (profissionalId == null) {
+            throw new IllegalArgumentException("ID não pode ser nulo.");
+        }
+
+        return servicoRepository.findAllByProfissionalId(profissionalId);
     }
 
     public Servico save(Servico servico) {

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import Equipa2.Incremento2.model.Servico;
 import Equipa2.Incremento2.model.dto.ServicoDTO;
+import Equipa2.Incremento2.model.enums.Servicos;
 import Equipa2.Incremento2.repository.ServicoRepository;
 import Equipa2.Incremento2.exceptions.ResourceNotFoundException;
 
@@ -90,6 +91,21 @@ public class ServicoService {
         }
 
         return servicoRepository.findAllByProfissionalId(profissionalId);
+    }
+
+    /**
+    * Encontra todos os serviços de um tipo.
+    *
+    * @param tipo o tipo do serviço
+    * @return uma lista de todos os serviços com esse tipo
+    * @throws IllegalArgumentException se o tipo for nulo
+    */
+    public List<Servico> findAllByTipo(Servicos tipo){
+        if (tipo == null) {
+            throw new IllegalArgumentException("tipo não pode ser nulo.");
+        }
+
+        return servicoRepository.findAllByTipo(tipo);
     }
 
     /**

@@ -7,12 +7,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import Equipa2.Incremento2.model.Profissional;
 import Equipa2.Incremento2.model.Servico;
 import Equipa2.Incremento2.model.dto.ServicoDTO;
+import Equipa2.Incremento2.model.enums.Servicos;
 import Equipa2.Incremento2.service.ServicoService;
 import Equipa2.Incremento2.service.UtilizadorService;
 
@@ -50,6 +52,22 @@ public class ServicoController {
         }
 
         return ResponseEntity.ok(servico);
+    }
+
+     /**
+     * Encontra todas os serviços de um tipo.
+     *
+     * @param tipo o tipo do serviço
+     * @return uma lista de todos os serviços com esse tipo
+     */
+    @GetMapping("/{tipo}")
+    public ResponseEntity<List<Servico>> getAllServicosByTipo(@RequestParam(value="tipo") Servicos tipo){
+
+        return new ResponseEntity<List<Servico>>(
+            servicoService.findAllByTipo(tipo),
+            HttpStatus.OK
+        );
+
     }
 
     /**

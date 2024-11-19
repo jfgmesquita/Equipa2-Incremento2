@@ -37,7 +37,7 @@ public class ServicoService {
 
         ServicoDTO servicoDTO = new ServicoDTO();
         servicoDTO.setId(ser.getId());
-        servicoDTO.setTitulo(ser.getTitulo());
+        servicoDTO.setTipo(ser.getTipo());
         servicoDTO.setDescricao(ser.getDescricao());
         servicoDTO.setData(formattedDate);
         servicoDTO.setProfissional(utilizadorService.findDTOById(ser.getProfissional().getId()));
@@ -80,7 +80,7 @@ public class ServicoService {
 
         Servico servico = servicoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado com o ID: " + id));
         
-        servico.setTitulo(servicoDetails.getTitulo());
+        servico.setTipo(servicoDetails.getTipo());
         servico.setDescricao(servicoDetails.getDescricao());
         servico.setData(servicoDetails.getData());
         servico.setValorHora(servicoDetails.getValorHora());

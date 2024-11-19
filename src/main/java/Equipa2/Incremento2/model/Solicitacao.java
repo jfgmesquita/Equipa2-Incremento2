@@ -40,8 +40,8 @@ public class Solicitacao {
     @JoinColumn(name = "servico_id")
     private Servico servico;
 
-	// @OneToOne(cascade = CascadeType.ALL)
-	// private Pagamento pagamento;
+	@OneToOne
+	private Pagamento pagamento;
 
     @Column(name = "data")
     private LocalDateTime data;

@@ -34,13 +34,13 @@ public class Profissional extends Utilizador {
     @Enumerated(EnumType.STRING)
     private MetodoPagamento formaDePagamento;
 
-    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profissional")
     private List<Servico> servicos;
 
-    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profissional")
     private List<Solicitacao> solicitacoes;
 
-    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profissional")
     private List<Avaliacao> avaliacoes;
 
     /**

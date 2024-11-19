@@ -34,7 +34,7 @@ public class Servico {
 
     private double valorHora;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "profissional_id")
     private Profissional profissional;
 }

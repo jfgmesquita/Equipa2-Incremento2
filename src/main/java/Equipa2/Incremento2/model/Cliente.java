@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table(name = "Cliente")
 public class Cliente extends Utilizador {
 	
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente")
     private List<Solicitacao> solicitacoes;
 
     @Column(name = "forma_de_pagamento")

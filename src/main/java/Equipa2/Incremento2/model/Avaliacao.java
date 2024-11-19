@@ -29,7 +29,7 @@ public class Avaliacao {
 
     private String data;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_solicitacao", referencedColumnName = "id")
     private Solicitacao servico;
     

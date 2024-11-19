@@ -9,6 +9,9 @@ import lombok.Setter;
 
 import Equipa2.Incremento2.model.enums.Servicos;
 
+/**
+ * DTO para o serviço, usado para transferir dados através da API.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,4 +29,5 @@ public class ServicoDTO {
     private double valorHora;
 
     private UtilizadorDTO profissional;
+
 }

@@ -44,6 +44,24 @@ public class UtilizadorDTO {
     private String codigo;
 
     /**
+     * Construtor para Utilizador padrão
+     * @param id o ID do utilizador
+     * @param nome o nome do utilizador
+     * @param email o email do utilizador
+     * @param password a password do utilizador
+     * @param morada a morada do utilizador
+     * @param userType o tipo de utilizador
+     */
+    public UtilizadorDTO(UUID id, String nome, String email, String password, String morada, UserType userType){
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.password = password;
+        this.morada = morada;
+        this.userType = userType;
+    }
+
+    /**
      * Construtor para Cliente.
      * 
      * @param id o ID do utilizador

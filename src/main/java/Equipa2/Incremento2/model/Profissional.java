@@ -4,24 +4,28 @@ import java.util.List;
 import java.util.ArrayList;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import Equipa2.Incremento2.model.enums.MetodoPagamento;
+import Equipa2.Incremento2.model.enums.Servicos;
 import Equipa2.Incremento2.model.enums.UserType;
 
 /**
  * A classe Profissional representa um utilizador que é um profissional com especialidade, experiência e valor por hora.
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 @Entity
 public class Profissional extends Utilizador {
 
     @Column(name = "especialidade")
-    private String especialidade;
+    @Enumerated(EnumType.STRING)
+    private Servicos especialidade;
 
     @Column(name = "experiencia")
     private int experiencia;
@@ -50,7 +54,7 @@ public class Profissional extends Utilizador {
      * @param experiencia a experiência do profissional em anos
      * @param formaDePagamento o método de pagamento que o profissional deseja receber
      */
-    public Profissional(String nome, String email, String password, String morada, UserType userType, String especialidade, int experiencia, MetodoPagamento formaDePagamento) {
+    public Profissional(String nome, String email, String password, String morada, UserType userType, Servicos especialidade, int experiencia, MetodoPagamento formaDePagamento) {
         super(nome, email, password, morada, userType);
         this.especialidade = especialidade;
         this.experiencia = experiencia;

@@ -1,26 +1,33 @@
 package Equipa2.Incremento2.model.dto;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+import Equipa2.Incremento2.model.enums.Servicos;
+
+/**
+ * DTO para o serviço, usado para transferir dados através da API.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class ServicoDTO {
 
     private UUID id;
-    private String titulo;
+    
+    private Servicos tipo;
 
     private String descricao;
+
     private String data;
+
     private double valorHora;
 
     private UtilizadorDTO profissional;
+
 }

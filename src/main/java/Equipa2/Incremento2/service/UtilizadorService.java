@@ -1,25 +1,29 @@
 package Equipa2.Incremento2.service;
 
-import java.util.List;
 import java.util.UUID;
+import java.util.List;
 
-import Equipa2.Incremento2.model.Admin;
-import Equipa2.Incremento2.model.Cliente;
-import Equipa2.Incremento2.model.Profissional;
-import Equipa2.Incremento2.model.dto.UtilizadorDTO;
-import Equipa2.Incremento2.model.enums.UserType;
-import Equipa2.Incremento2.repository.AdminRepository;
-import Equipa2.Incremento2.repository.ClienteRepository;
-import Equipa2.Incremento2.repository.ProfissionalRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import Equipa2.Incremento2.model.enums.UserType;
+import Equipa2.Incremento2.model.Admin;
+import Equipa2.Incremento2.model.Cliente;
+import Equipa2.Incremento2.model.Profissional;
 import Equipa2.Incremento2.model.Utilizador;
+import Equipa2.Incremento2.model.dto.UtilizadorDTO;
+import Equipa2.Incremento2.repository.AdminRepository;
+import Equipa2.Incremento2.repository.ClienteRepository;
+import Equipa2.Incremento2.repository.ProfissionalRepository;
 import Equipa2.Incremento2.repository.UtilizadorRepository;
 import Equipa2.Incremento2.exceptions.ResourceNotFoundException;
 
+/**
+ * Serviço para operações relacionadas com a entidade Utilizador.
+ */
 @Service
 public class UtilizadorService {
+
     @Autowired
     private UtilizadorRepository utilizadorRepository;
 
@@ -32,10 +36,23 @@ public class UtilizadorService {
     @Autowired
     private AdminRepository adminRepository;
 
+    /**
+     * Encontra todos os utilizadores.
+     *
+     * @return uma lista de todos os utilizadores
+     */
     public List<Utilizador> findAll() {
         return utilizadorRepository.findAll();
     }
 
+    /**
+     * Encontra um utilizador pelo ID.
+     *
+     * @param id o ID do utilizador
+     * @return o utilizador com o ID fornecido
+     * @throws IllegalArgumentException se o ID for nulo
+     * @throws ResourceNotFoundException se o utilizador não for encontrado
+     */
     public Utilizador findById(UUID id) {
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo.");
@@ -44,6 +61,13 @@ public class UtilizadorService {
         return utilizadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Utilizador não encontrado com o ID: " + id));
     }
 
+    /**
+     * Encontra um utilizador pelo ID e converte-o para um DTO.
+     *
+     * @param id o ID do utilizador
+     * @return o DTO do utilizador com o ID fornecido
+     * @throws IllegalArgumentException se o ID for nulo
+     */
     public UtilizadorDTO findDTOById(UUID id) {
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo.");
@@ -78,10 +102,23 @@ public class UtilizadorService {
         return utilizadorDTO;
     }
 
+    /**
+     * Encontra um utilizador pelo email.
+     *
+     * @param email o email do utilizador
+     * @return o utilizador com o email fornecido
+     */
     public Utilizador findByEmail(String email) {
         return utilizadorRepository.findByEmail(email);
     }
 
+    /**
+     * Guarda um cliente.
+     *
+     * @param cliente o cliente a ser guardado
+     * @return o cliente guardado
+     * @throws IllegalArgumentException se o cliente for nulo
+     */
     public Cliente saveCliente(Cliente cliente) {
         if (cliente == null) {
             throw new IllegalArgumentException("Cliente não pode ser nulo.");
@@ -90,14 +127,28 @@ public class UtilizadorService {
         return clienteRepository.save(cliente);
     }
 
-    public Profissional saveProfissional(Profissional pro) {
-        if (pro == null) {
+    /**
+     * Guarda um profissional.
+     *
+     * @param profissional o profissional a ser guardado
+     * @return o profissional guardado
+     * @throws IllegalArgumentException se o profissional for nulo
+     */
+    public Profissional saveProfissional(Profissional profissional) {
+        if (profissional == null) {
             throw new IllegalArgumentException("Profissional não pode ser nulo.");
         }
 
-        return profissionalRepository.save(pro);
+        return profissionalRepository.save(profissional);
     }
 
+    /**
+     * Guarda um administrador.
+     *
+     * @param admin o administrador a ser guardado
+     * @return o administrador guardado
+     * @throws IllegalArgumentException se o administrador for nulo
+     */
     public Admin saveAdmin(Admin admin) {
         if (admin == null) {
             throw new IllegalArgumentException("Admin não pode ser nulo.");
@@ -106,6 +157,15 @@ public class UtilizadorService {
         return adminRepository.save(admin);
     }
 
+    /**
+     * Atualiza um utilizador.
+     *
+     * @param id o ID do utilizador a ser atualizado
+     * @param utilizadorDetails os detalhes do utilizador a serem atualizados
+     * @return o utilizador atualizado
+     * @throws IllegalArgumentException se o ID ou os detalhes do utilizador forem nulos
+     * @throws ResourceNotFoundException se o utilizador não for encontrado
+     */
     public Utilizador update(UUID id, Utilizador utilizadorDetails) {
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo.");
@@ -126,6 +186,13 @@ public class UtilizadorService {
         return utilizadorRepository.save(utilizador);
     }
 
+    /**
+     * Apaga um utilizador pelo ID.
+     *
+     * @param id o ID do utilizador a ser apagado
+     * @throws IllegalArgumentException se o ID for nulo
+     * @throws ResourceNotFoundException se o utilizador não for encontrado
+     */
     public void deleteById(UUID id) {
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo.");
@@ -137,4 +204,5 @@ public class UtilizadorService {
         
         utilizadorRepository.deleteById(id);
     }
+    
 }

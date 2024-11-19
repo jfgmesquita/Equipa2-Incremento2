@@ -1,26 +1,30 @@
 package Equipa2.Incremento2.model;
 
 import java.util.List;
-
-import Equipa2.Incremento2.model.enums.*;
-
 import java.util.ArrayList;
+
 import jakarta.persistence.*;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
+import Equipa2.Incremento2.model.enums.MetodoPagamento;
+import Equipa2.Incremento2.model.enums.UserType;
 
 /**
  * A classe Cliente representa um utilizador que é um cliente com uma forma de pagamento e uma lista de solicitações.
  */
-@Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
+@Entity
 @Table(name = "Cliente")
 public class Cliente extends Utilizador {
 	
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente")
     private List<Solicitacao> solicitacoes;
 
     @Column(name = "forma_de_pagamento")
@@ -41,4 +45,5 @@ public class Cliente extends Utilizador {
         this.formaDePagamento = formaDePagamento;
         solicitacoes = new ArrayList<Solicitacao>();
     }
+    
 }

@@ -3,22 +3,26 @@ package Equipa2.Incremento2.model;
 import java.util.UUID;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * A classe Avaliacao representa uma avaliação feita por um cliente sobre um serviço prestado por um profissional.
+ * Classe que representa uma avaliação.
  */
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 @Entity
 public class Avaliacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private int valor;
     
     @ManyToOne
@@ -29,7 +33,7 @@ public class Avaliacao {
 
     private String data;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_solicitacao", referencedColumnName = "id")
     private Solicitacao servico;
     
@@ -46,4 +50,5 @@ public class Avaliacao {
         this.servico = servico;
         data = "Hoje";
     }
+    
 }

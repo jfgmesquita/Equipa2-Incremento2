@@ -1,21 +1,24 @@
 package Equipa2.Incremento2.model;
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.*;
+
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import Equipa2.Incremento2.model.enums.StatusServico;
 
-import java.time.LocalDateTime;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
- * Classe para representar a Solicitação do serviço.
+ * Classe que representa a Solicitação do serviço.
  */
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "solicitacao_de_servico")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -41,9 +44,29 @@ public class Solicitacao {
     @JoinColumn(name = "servico_id")
     private Servico servico;
 
-	// @OneToOne(cascade = CascadeType.ALL)
-	// private Pagamento pagamento;
+    @OneToOne
+    private Pagamento pagamento;
 
     @Column(name = "data")
     private LocalDateTime data;
+
+    /**
+     * Construtor que inicializa uma nova solicitação com os dados fornecidos.
+     *
+     * @param status       Status do serviço.
+     * @param cliente      Cliente que solicitou o serviço.
+     * @param profissional Profissional que realizará o serviço.
+     * @param servico      Serviço solicitado.
+     * @param pagamento    Pagamento associado à solicitação.
+     * @param data         Data da solicitação.
+     */
+    public Solicitacao(StatusServico status, Cliente cliente, Profissional profissional, Servico servico, Pagamento pagamento, LocalDateTime data) {
+        this.status = status;
+        this.cliente = cliente;
+        this.profissional = profissional;
+        this.servico = servico;
+        this.pagamento = pagamento;
+        this.data = data;
+    }
+    
 }

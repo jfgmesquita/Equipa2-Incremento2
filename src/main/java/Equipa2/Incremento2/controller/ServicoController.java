@@ -1,41 +1,46 @@
 package Equipa2.Incremento2.controller;
 
+import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
-import Equipa2.Incremento2.model.Profissional;
-import Equipa2.Incremento2.model.Utilizador;
-import Equipa2.Incremento2.model.dto.ServicoDTO;
-import Equipa2.Incremento2.model.dto.UtilizadorDTO;
-import Equipa2.Incremento2.service.UtilizadorService;
-import org.springframework.cglib.core.Local;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import Equipa2.Incremento2.model.Profissional;
 import Equipa2.Incremento2.model.Servico;
+import Equipa2.Incremento2.model.dto.ServicoDTO;
 import Equipa2.Incremento2.service.ServicoService;
+import Equipa2.Incremento2.service.UtilizadorService;
 
+/**
+ * Controlador para operações relacionadas com a entidade Servico.
+ */
 @RestController
 @RequestMapping("/api/servicos")
 @CrossOrigin(origins = "*")
 public class ServicoController {
+
     @Autowired
     private ServicoService servicoService;
 
     @Autowired
     private UtilizadorService utilizadorService;
 
-//    @GetMapping
-//    public List<ServicoDTO> getAllServicos() {
-//        ListzservicoService.findAll();
-//        return
-//    }
+    // @GetMapping
+    // public List<ServicoDTO> getAllServicos() {
+    //     ListzservicoService.findAll();
+    //     return
+    // }
 
+    /**
+     * Encontra um serviço pelo ID.
+     * @param id
+     * @return o serviço com o ID fornecido
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ServicoDTO> getServicoById(@PathVariable UUID id) {
         ServicoDTO servico = servicoService.findDTOById(id);
@@ -47,6 +52,10 @@ public class ServicoController {
         return ResponseEntity.ok(servico);
     }
 
+    /**
+     * Encontra todos os serviços.
+     * @return uma lista de todos os serviços
+     */
     @GetMapping
     public ResponseEntity<List<ServicoDTO>> getAll() {
         List<Servico> servicos = servicoService.findAll();
@@ -60,7 +69,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             dtos.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTitulo(),
+                    ser.getTipo(),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -71,6 +80,11 @@ public class ServicoController {
         return ResponseEntity.ok().body(dtos);
     }
 
+    /**
+     * Encontra todos os serviços de um profissional.
+     * @param profissionalId
+     * @return uma lista de todos os serviços de um profissional
+     */
     @GetMapping("/profissional/{profissionalId}")
     public ResponseEntity<List<ServicoDTO>> getAllByProfissionalId(@PathVariable UUID profissionalId) {
         List<Servico> servicos = servicoService.findAllByProfissionalId(profissionalId);
@@ -83,7 +97,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             servicoDTOs.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTitulo(),
+                    ser.getTipo(),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -94,6 +108,11 @@ public class ServicoController {
         return ResponseEntity.ok(servicoDTOs);
     }
 
+    /**
+     * Cria um serviço.
+     * @param servico
+     * @return o serviço criado
+     */
     @PostMapping
     public ResponseEntity<ServicoDTO> createServico(@RequestBody ServicoDTO servico) {
         Profissional pro = (Profissional) utilizadorService.findById(servico.getProfissional().getId());
@@ -102,7 +121,7 @@ public class ServicoController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         Servico ser = new Servico();
-        ser.setTitulo(servico.getTitulo());
+        ser.setTipo(servico.getTipo());
         ser.setDescricao(servico.getDescricao());
         ser.setData(date);
         ser.setValorHora(servico.getValorHora());
@@ -117,6 +136,12 @@ public class ServicoController {
         return ResponseEntity.ok().body(servico);
     }
 
+    /**
+     * Atualiza um serviço.
+     * @param id
+     * @param servicoDetails
+     * @return o serviço atualizado
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Servico> updateServico(@PathVariable UUID id, @RequestBody Servico servicoDetails) {
         Servico servico = servicoService.findById(id);
@@ -125,7 +150,7 @@ public class ServicoController {
             return ResponseEntity.notFound().build();
         }
 
-        servico.setTitulo(servicoDetails.getTitulo());
+        servico.setTipo(servicoDetails.getTipo());
         servico.setDescricao(servicoDetails.getDescricao());
         servico.setData(servicoDetails.getData());
         servico.setValorHora(servicoDetails.getValorHora());
@@ -134,6 +159,11 @@ public class ServicoController {
         return ResponseEntity.ok(updatedServico);
     }
 
+    /**
+     * Apaga um serviço.
+     * @param id
+     * @return resposta de sucesso ou erro
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteServico(@PathVariable UUID id) {
         Servico servico = servicoService.findById(id);
@@ -145,4 +175,5 @@ public class ServicoController {
         servicoService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
 }

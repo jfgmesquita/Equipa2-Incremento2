@@ -42,7 +42,6 @@ public class ServicoService {
         servicoDTO.setId(ser.getId());
         servicoDTO.setTitulo(ser.getTitulo());
         servicoDTO.setDescricao(ser.getDescricao());
-        servicoDTO.setValorHora(ser.getValorHora());
         servicoDTO.setData(formattedDate);
         servicoDTO.setProfissional(utilizadorService.findDTOById(ser.getProfissional().getId()));
 

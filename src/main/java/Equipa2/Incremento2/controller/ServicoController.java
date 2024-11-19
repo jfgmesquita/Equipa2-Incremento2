@@ -60,7 +60,7 @@ public class ServicoController {
      * @param tipo o tipo do serviço
      * @return uma lista de todos os serviços com esse tipo
      */
-    @GetMapping("/{tipo}")
+    @GetMapping("/tipo/{tipo}")
     public ResponseEntity<List<Servico>> getAllServicosByTipo(@RequestParam(value="tipo") Servicos tipo){
 
         return new ResponseEntity<List<Servico>>(

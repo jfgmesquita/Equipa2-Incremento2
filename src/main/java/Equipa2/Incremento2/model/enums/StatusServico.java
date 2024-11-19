@@ -4,7 +4,6 @@ package Equipa2.Incremento2.model.enums;
  * A enumeração StatusServico representa os possíveis estados de um serviço.
  */
 public enum StatusServico {
-
     /**
      * Indica que o serviço está pendente.
      */
@@ -24,5 +23,4 @@ public enum StatusServico {
      * Indica que o serviço foi cancelado.
      */
     CANCELADO
-    
 }

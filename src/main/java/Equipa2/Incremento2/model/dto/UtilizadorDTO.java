@@ -2,6 +2,7 @@ package Equipa2.Incremento2.model.dto;
 
 import Equipa2.Incremento2.model.enums.UserType;
 import Equipa2.Incremento2.model.enums.MetodoPagamento;
+import Equipa2.Incremento2.model.enums.Servicos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,7 @@ public class UtilizadorDTO {
     }
 
     //Construtor para profissional
-    public UtilizadorDTO(UUID id, String nome, String email, String password, String morada, UserType userType, MetodoPagamento formaDePagamento, String especialidade, int experiencia){
+    public UtilizadorDTO(UUID id, String nome, String email, String password, String morada, UserType userType, MetodoPagamento formaDePagamento, Servicos especialidade, int experiencia){
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -61,7 +62,7 @@ public class UtilizadorDTO {
     }
 
     // Para Profissional
-    private String especialidade;
+    private Servicos especialidade;
     private int experiencia;
 
     // Para Cliente

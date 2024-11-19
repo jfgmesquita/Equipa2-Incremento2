@@ -26,6 +26,7 @@ public class Solicitacao {
     private UUID id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 50)
     private StatusServico status;
 
     @ManyToOne

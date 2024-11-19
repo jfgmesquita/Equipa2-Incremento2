@@ -1,5 +1,6 @@
 package Equipa2.Incremento2.controller;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 
@@ -32,8 +33,25 @@ public class UtilizadorController {
      * @return uma lista de todos os utilizadores
      */
     @GetMapping
-    public List<Utilizador> getAllUtilizadores() {
-        return utilizadorService.findAll();
+    public ResponseEntity<List<UtilizadorDTO>> getAllUtilizadores() {
+        List<Utilizador> utilizadores = utilizadorService.findAll();
+
+        List<UtilizadorDTO> dtos = new ArrayList<>();
+
+        for(Utilizador uti : utilizadores){
+            dtos.add(
+                    new UtilizadorDTO(
+                            uti.getId(),
+                            uti.getNome(),
+                            uti.getEmail(),
+                            uti.getPassword(),
+                            uti.getMorada(),
+                            uti.getUserType()
+                    )
+            );
+        }
+
+        return ResponseEntity.ok().body(dtos);
     }
 
     /**

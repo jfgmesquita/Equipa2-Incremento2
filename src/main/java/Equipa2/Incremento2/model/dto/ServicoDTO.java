@@ -15,11 +15,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ServicoDTO {
 
+    private UUID id;
     private String titulo;
 
     private String descricao;
     private String data;
     private double valorHora;
 
-    private UUID profissionalId;
+    private UtilizadorDTO profissional;
 }

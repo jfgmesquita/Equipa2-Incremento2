@@ -8,7 +8,8 @@ import java.util.UUID;
 import Equipa2.Incremento2.model.Profissional;
 import Equipa2.Incremento2.model.Utilizador;
 import Equipa2.Incremento2.model.dto.ServicoDTO;
-import Equipa2.Incremento2.repository.UtilizadorRepository;
+import Equipa2.Incremento2.model.dto.UtilizadorDTO;
+import Equipa2.Incremento2.service.UtilizadorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +25,13 @@ public class ServicoController {
     private ServicoService servicoService;
 
     @Autowired
-    private UtilizadorRepository utilizadorRepository;
+    private UtilizadorService utilizadorService;
 
-    @GetMapping
-    public List<ServicoDTO> getAllServicos() {
-        List<Servico> servicos = servicoService.findAll();
-
-        List<ServicoDTO> servicoDTOs = new ArrayList<>();
-
-        for(Servico ser: servicos){
-            servicoDTOs.add(new ServicoDTO(
-                    ser.getTitulo(),
-                    ser.getDescricao(),
-                    ser.getData(),
-                    ser.getValorHora(),
-                    ser.getProfissional().getId()
-            ));
-        }
-
-        return servicoDTOs;
-    }
+//    @GetMapping
+//    public List<ServicoDTO> getAllServicos() {
+//        ListzservicoService.findAll();
+//        return
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Servico> getServicoById(@PathVariable UUID id) {
@@ -64,11 +52,12 @@ public class ServicoController {
 
         for(Servico ser: servicos){
             servicoDTOs.add(new ServicoDTO(
+                    ser.getId(),
                     ser.getTitulo(),
                     ser.getDescricao(),
                     ser.getData(),
                     ser.getValorHora(),
-                    ser.getProfissional().getId()
+                    utilizadorService.findDTOById(ser.getProfissional().getId())
             ));
         }
 
@@ -76,19 +65,29 @@ public class ServicoController {
     }
 
     @PostMapping
-    public ServicoDTO createServico(@RequestBody ServicoDTO servico) {
-        Optional<Utilizador> pro = utilizadorRepository.findById(servico.getProfissionalId());
+    public ResponseEntity<ServicoDTO> createServico(@RequestBody ServicoDTO servico) {
+        Profissional pro = (Profissional) utilizadorService.findById(servico.getProfissional().getId());
 
         Servico ser = new Servico();
         ser.setTitulo(servico.getTitulo());
         ser.setDescricao(servico.getDescricao());
         ser.setData(servico.getData());
         ser.setValorHora(servico.getValorHora());
-        ser.setProfissional((Profissional) pro.get());
+        ser.setProfissional(pro);
 
         servicoService.save(ser);
 
-        return servico;
+        servico.setId(ser.getId());
+        servico.getProfissional().setNome(pro.getNome());
+        servico.getProfissional().setEmail(pro.getEmail());
+        servico.getProfissional().setPassword(pro.getNome());
+        servico.getProfissional().setMorada(pro.getMorada());
+        servico.getProfissional().setUserType(pro.getUserType());
+        servico.getProfissional().setFormaDePagamento(pro.getFormaDePagamento());
+        servico.getProfissional().setEspecialidade(pro.getNome());
+        servico.getProfissional().setExperiencia(pro.getExperiencia());
+
+        return ResponseEntity.ok().body(servico);
     }
 
     @PutMapping("/{id}")

@@ -1,9 +1,7 @@
 package Equipa2.Incremento2.model.dto;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

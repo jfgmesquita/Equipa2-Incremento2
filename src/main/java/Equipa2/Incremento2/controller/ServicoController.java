@@ -37,8 +37,8 @@ public class ServicoController {
 //    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Servico> getServicoById(@PathVariable UUID id) {
-        Servico servico = servicoService.findById(id);
+    public ResponseEntity<ServicoDTO> getServicoById(@PathVariable UUID id) {
+        ServicoDTO servico = servicoService.findDTOById(id);
 
         if (servico == null) {
             return ResponseEntity.notFound().build();

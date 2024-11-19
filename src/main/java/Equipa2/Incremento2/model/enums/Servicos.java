@@ -7,5 +7,4 @@ public enum Servicos {
 	PICHELARIA,
 	LIMPEZA,
 	COZINHA
-
 }

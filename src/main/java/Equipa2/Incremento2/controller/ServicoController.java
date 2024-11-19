@@ -4,15 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import Equipa2.Incremento2.model.Profissional;
-import Equipa2.Incremento2.model.Utilizador;
 import Equipa2.Incremento2.model.dto.ServicoDTO;
-import Equipa2.Incremento2.model.dto.UtilizadorDTO;
 import Equipa2.Incremento2.service.UtilizadorService;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;

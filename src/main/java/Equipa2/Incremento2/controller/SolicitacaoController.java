@@ -186,7 +186,7 @@ public class SolicitacaoController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         solicitacao.setStatus(solicitacaoDTO.getStatus());
-        Solicitacao updatedSolicitacao = solicitacaoService.save(solicitacao);
+        solicitacaoService.save(solicitacao);
 
         SolicitacaoDTO dto = new SolicitacaoDTO(
                 solicitacao.getId(),

@@ -15,7 +15,7 @@ public enum StatusServico {
     ANDAMENTO,
 
     /**
-     * Indica que o serviço foi aceito.
+     * Indica que o serviço foi aceite.
      */
     ACEITE,
 

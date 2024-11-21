@@ -30,12 +30,12 @@ public class AuthController {
     @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequest){
         Utilizador utilizador = utilizadorService.findByEmail(loginRequest.getEmail());
-        UtilizadorDTO userDto = utilizadorService.findDTOById(utilizador.getId());
-
 
         if(utilizador == null || !loginRequest.getPassword().equals(utilizador.getPassword())){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
         }
+
+        UtilizadorDTO userDto = utilizadorService.findDTOById(utilizador.getId());
 
         return ResponseEntity.ok().body(userDto);
     }

@@ -172,7 +172,6 @@ public class SolicitacaoController {
      * Atualiza uma solicitação.
      *
      * @param id o ID da solicitação
-     * @param solicitacaoDetails os detalhes da solicitação a serem atualizados
      * @return a solicitação atualizada
      */
     @PutMapping("/{id}")

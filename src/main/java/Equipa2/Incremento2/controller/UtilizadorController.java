@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,11 @@ public class UtilizadorController {
      * @return o utilizador criado
      */
     @PostMapping
-    public ResponseEntity<UtilizadorDTO> createUtilizador(@RequestBody UtilizadorDTO utilizador){
+    public ResponseEntity<?> createUtilizador(@RequestBody UtilizadorDTO utilizador){
+
+        if(utilizadorService.findByEmail(utilizador.getEmail()) != null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um utilizador registado com este email.");
+        }
 
         if(utilizador.getUserType() == UserType.CLIENTE){
             Cliente cliente = new Cliente();

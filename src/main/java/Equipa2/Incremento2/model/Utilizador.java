@@ -22,7 +22,7 @@ import Equipa2.Incremento2.model.enums.UserType;
 @Entity
 @Table(name = "utilizador")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Utilizador implements Serializable {
+public class Utilizador implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

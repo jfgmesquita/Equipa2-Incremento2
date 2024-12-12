@@ -72,6 +72,33 @@ public class UtilizadorController {
         return ResponseEntity.ok(utilizador);
     }
 
+  /**
+     * Encontra todos os Utilizadores de um tipo.
+     *
+     * @param tipo o tipo de Utilizador
+     * @return uma lista de todos os utilizadores com esse tipo
+     */
+    @GetMapping("/tipo")
+    public ResponseEntity<List<UtilizadorDTO>> getAllUtilizadoresByUserType(@RequestParam(value="UserType") UserType UserType){
+        List<Utilizador> utilizadores = utilizadorService.findAllByTipo(UserType.name());
+       
+        List<UtilizadorDTO> dtos = new ArrayList<>();
+
+        for(Utilizador uti : utilizadores){
+            UtilizadorDTO utilizadorDTO = new UtilizadorDTO(
+                uti.getId(),
+                uti.getNome(),
+                uti.getEmail(),
+                uti.getPassword(),
+                uti.getMorada(),
+                uti.getUserType()
+        );
+            dtos.add(utilizadorDTO);
+        }
+        return ResponseEntity.ok().body(dtos);
+        
+    }
+
     /**
      * Cria um utilizador.
      *

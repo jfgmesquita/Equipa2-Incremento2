@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import Equipa2.Incremento2.model.Servico;
-import Equipa2.Incremento2.model.enums.Servicos;
 
 /**
  * Repositório para a entidade Servico.
@@ -31,7 +30,7 @@ public interface ServicoRepository extends JpaRepository<Servico, UUID> {
      * @param tipo o tipo do serviço
      * @return uma lista de serviços associados ao tipo
      */
-    @Query(value = "SELECT * FROM servico where tipo = ?1", nativeQuery = true)
-    public List<Servico> findAllByTipo(Servicos tipo);
+    @Query(value = "SELECT * FROM servico s WHERE s.tipo = ?1", nativeQuery = true)
+    public List<Servico> findAllByTipo(String tipo);
 
 }

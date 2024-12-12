@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 import Equipa2.Incremento2.model.enums.UserType;
 import Equipa2.Incremento2.model.Admin;
 import Equipa2.Incremento2.model.Cliente;
@@ -110,6 +111,20 @@ public class UtilizadorService {
      */
     public Utilizador findByEmail(String email) {
         return utilizadorRepository.findByEmail(email);
+    }
+
+     /**
+    * Encontra todos os utilizadores de um tipo.
+    *
+    * @param tipo o tipo de utilizador
+    * @return uma lista de todos os utilizadores com esse tipo
+    * @throws IllegalArgumentException se o tipo for nulo
+    */
+    public List<Utilizador> findAllByTipo(String tipo){
+        if (tipo == null) {
+            throw new IllegalArgumentException("tipo não pode ser nulo.");
+        }
+        return utilizadorRepository.findAllByUserType(tipo);
     }
 
     /**

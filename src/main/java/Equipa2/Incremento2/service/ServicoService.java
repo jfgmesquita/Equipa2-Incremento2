@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import Equipa2.Incremento2.model.Servico;
 import Equipa2.Incremento2.model.dto.ServicoDTO;
-import Equipa2.Incremento2.model.enums.Servicos;
 import Equipa2.Incremento2.repository.ServicoRepository;
 import Equipa2.Incremento2.exceptions.ResourceNotFoundException;
 
@@ -100,7 +99,7 @@ public class ServicoService {
     * @return uma lista de todos os serviços com esse tipo
     * @throws IllegalArgumentException se o tipo for nulo
     */
-    public List<Servico> findAllByTipo(Servicos tipo){
+    public List<Servico> findAllByTipo(String tipo){
         if (tipo == null) {
             throw new IllegalArgumentException("tipo não pode ser nulo.");
         }

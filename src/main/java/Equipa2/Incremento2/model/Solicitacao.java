@@ -1,6 +1,9 @@
 package Equipa2.Incremento2.model;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -34,10 +37,12 @@ public class Solicitacao {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "profissional_id")
+    @JsonIgnore
     private Profissional profissional;
 
     @ManyToOne

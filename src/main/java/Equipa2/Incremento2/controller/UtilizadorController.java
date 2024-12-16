@@ -28,6 +28,17 @@ public class UtilizadorController {
     @Autowired
     private UtilizadorService utilizadorService;
 
+    @GetMapping("/email")
+    public ResponseEntity<Utilizador> getUtilizadorByEmail(@RequestParam(value="email") String email) {
+        Utilizador utilizador = utilizadorService.findByEmail(email);
+
+        if (utilizador == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(utilizador);
+    }
+
     /**
      * Encontra todos os utilizadores.
      *

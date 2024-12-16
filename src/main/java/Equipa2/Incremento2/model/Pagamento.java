@@ -28,6 +28,10 @@ public class Pagamento {
 
     private double valor;
 
+    @OneToOne
+    @JoinColumn(name = "solicitacao_id")
+    private Solicitacao solicitacao;
+
     @ManyToOne
     @JoinColumn(name = "origem_cliente_id")
     private Cliente origemCliente;
@@ -35,9 +39,6 @@ public class Pagamento {
     @ManyToOne
     @JoinColumn(name = "destino_profissional_id")
     private Profissional destinoProfissional;
-
-    @Enumerated(EnumType.STRING)
-    private MetodoPagamento metodo;
 
     @Enumerated(EnumType.STRING)
     private StatusPagamento status;
@@ -48,13 +49,11 @@ public class Pagamento {
      * @param valor o valor do pagamento
      * @param origemCliente o cliente que realiza o pagamento
      * @param destinoProfissional o profissional que recebe o pagamento
-     * @param metodo o método de pagamento utilizado
      */
-    public Pagamento(double valor, Cliente origemCliente, Profissional destinoProfissional, MetodoPagamento metodo) {
+    public Pagamento(double valor, Cliente origemCliente, Profissional destinoProfissional) {
         this.valor = valor;
         this.origemCliente = origemCliente;
         this.destinoProfissional = destinoProfissional;
-        this.metodo = metodo;
         status = StatusPagamento.PENDENTE;
     }
 	

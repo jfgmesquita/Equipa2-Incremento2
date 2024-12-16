@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 
+import Equipa2.Incremento2.model.enums.StatusUtilizadores;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,30 @@ public class UtilizadorController {
         return ResponseEntity.ok().body(dtos);
     }
 
+    @GetMapping("/ativos")
+    public ResponseEntity<List<UtilizadorDTO>> getAllUtilizadoresAtivos() {
+        List<Utilizador> utilizadores = utilizadorService.findAll();
+
+        List<UtilizadorDTO> dtos = new ArrayList<>();
+
+        for(Utilizador uti : utilizadores){
+            if(uti.getStatus() == StatusUtilizadores.ATIVO){
+                dtos.add(
+                        new UtilizadorDTO(
+                                uti.getId(),
+                                uti.getNome(),
+                                uti.getEmail(),
+                                uti.getPassword(),
+                                uti.getMorada(),
+                                uti.getUserType()
+                        )
+                );
+            }
+        }
+
+        return ResponseEntity.ok().body(dtos);
+    }
+
     /**
      * Encontra um utilizador pelo ID.
      *
@@ -74,8 +99,6 @@ public class UtilizadorController {
 
   /**
      * Encontra todos os Utilizadores de um tipo.
-     *
-     * @param tipo o tipo de Utilizador
      * @return uma lista de todos os utilizadores com esse tipo
      */
     @GetMapping("/tipo")
@@ -250,7 +273,7 @@ public class UtilizadorController {
             return ResponseEntity.notFound().build();
         }
 
-        utilizadorService.deleteById(id);
+        utilizadorService.disableUtilizador(utilizador);
         return ResponseEntity.noContent().build();
     }
 

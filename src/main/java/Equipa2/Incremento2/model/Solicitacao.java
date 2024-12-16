@@ -3,14 +3,13 @@ package Equipa2.Incremento2.model;
 import java.util.UUID;
 import java.time.LocalDateTime;
 
+import Equipa2.Incremento2.model.enums.StatusSolicitacao;
 import jakarta.persistence.*;
 
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import Equipa2.Incremento2.model.enums.StatusServico;
 
 /**
  * Classe que representa a Solicitação do serviço.
@@ -30,7 +29,7 @@ public class Solicitacao {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 50)
-    private StatusServico status;
+    private StatusSolicitacao status;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -45,6 +44,7 @@ public class Solicitacao {
     private Servico servico;
 
     @OneToOne
+    @JoinColumn(name = "pagamento_id")
     private Pagamento pagamento;
 
     @Column(name = "data")
@@ -60,7 +60,7 @@ public class Solicitacao {
      * @param pagamento    Pagamento associado à solicitação.
      * @param data         Data da solicitação.
      */
-    public Solicitacao(StatusServico status, Cliente cliente, Profissional profissional, Servico servico, Pagamento pagamento, LocalDateTime data) {
+    public Solicitacao(StatusSolicitacao status, Cliente cliente, Profissional profissional, Servico servico, Pagamento pagamento, LocalDateTime data) {
         this.status = status;
         this.cliente = cliente;
         this.profissional = profissional;

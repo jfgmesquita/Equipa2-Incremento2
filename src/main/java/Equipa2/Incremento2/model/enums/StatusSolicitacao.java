@@ -3,7 +3,7 @@ package Equipa2.Incremento2.model.enums;
 /**
  * A enumeração StatusServico representa os possíveis estados de um serviço.
  */
-public enum StatusServico {
+public enum StatusSolicitacao {
     /**
      * Indica que o serviço está pendente.
      */
@@ -18,6 +18,11 @@ public enum StatusServico {
      * Indica que o serviço foi aceite.
      */
     ACEITE,
+
+    /**
+     * Indica que o serviço foi concluído mas o pagamento está pendente
+     */
+    PAGAMENTO_PENDENTE,
 
     /**
      * Indica que o serviço foi concluído.

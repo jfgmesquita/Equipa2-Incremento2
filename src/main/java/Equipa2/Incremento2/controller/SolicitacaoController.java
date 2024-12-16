@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import Equipa2.Incremento2.service.PagamentoService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class SolicitacaoController {
 
     @Autowired
     private ServicoService servicoService;
+
+    @Autowired
+    private PagamentoService pagamentoService;
 
     /**
      * Encontra todas as solicitações de um utilizador.
@@ -74,6 +78,7 @@ public class SolicitacaoController {
                             sol.getStatus(),
                             utilizadorService.findDTOById(sol.getCliente().getId()),
                             servicoService.findDTOById(sol.getServico().getId()),
+                            sol.getPagamento() != null ? pagamentoService.findDTOById(sol.getPagamento().getId()) : null,
                             formattedDate
                     )
             );
@@ -105,6 +110,7 @@ public class SolicitacaoController {
                             sol.getStatus(),
                             utilizadorService.findDTOById(sol.getCliente().getId()),
                             servicoService.findDTOById(sol.getServico().getId()),
+                            sol.getPagamento() != null ? pagamentoService.findDTOById(sol.getPagamento().getId()) : null,
                             formattedDate
                     )
             );
@@ -120,14 +126,25 @@ public class SolicitacaoController {
      * @return a solicitação com o ID fornecido
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Solicitacao> getSolicitacaoById(@PathVariable UUID id) {
+    public ResponseEntity<SolicitacaoDTO> getSolicitacaoById(@PathVariable UUID id) {
         Solicitacao solicitacao = solicitacaoService.findById(id);
 
         if (solicitacao == null) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(solicitacao);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        SolicitacaoDTO solDTO = new SolicitacaoDTO(
+                solicitacao.getId(),
+                solicitacao.getStatus(),
+                utilizadorService.findDTOById(solicitacao.getCliente().getId()),
+                servicoService.findDTOById(solicitacao.getServico().getId()),
+                solicitacao.getPagamento() != null ? pagamentoService.findDTOById(solicitacao.getPagamento().getId()) : null,
+                solicitacao.getData().format(dtf)
+        );
+
+        return ResponseEntity.ok().body(solDTO);
     }
 
     /**
@@ -192,6 +209,7 @@ public class SolicitacaoController {
                 solicitacao.getStatus(),
                 utilizadorService.findDTOById(solicitacao.getCliente().getId()),
                 servicoService.findDTOById(solicitacao.getServico().getId()),
+                solicitacao.getPagamento() != null ? pagamentoService.findDTOById(solicitacao.getPagamento().getId()) : null,
                 solicitacao.getData().format(dtf)
         );
 

@@ -3,6 +3,7 @@ package Equipa2.Incremento2.service;
 import java.util.UUID;
 import java.util.List;
 
+import Equipa2.Incremento2.model.enums.StatusUtilizadores;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -83,6 +84,7 @@ public class UtilizadorService {
         utilizadorDTO.setPassword(uti.getPassword());
         utilizadorDTO.setMorada(uti.getMorada());
         utilizadorDTO.setUserType(uti.getUserType());
+        utilizadorDTO.setStatus(uti.getStatus());
         if(uti.getUserType() == UserType.CLIENTE){
             Cliente cli = (Cliente) uti;
             utilizadorDTO.setFormaDePagamento(cli.getFormaDePagamento());
@@ -200,6 +202,13 @@ public class UtilizadorService {
 
         return utilizadorRepository.save(utilizador);
     }
+
+
+    public Utilizador disableUtilizador(Utilizador utilizador){
+        utilizador.setStatus(StatusUtilizadores.INATIVO);
+        return utilizadorRepository.save(utilizador);
+    }
+
 
     /**
      * Apaga um utilizador pelo ID.

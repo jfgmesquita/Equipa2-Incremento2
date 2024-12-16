@@ -2,6 +2,7 @@ package Equipa2.Incremento2.model.dto;
 
 import java.util.UUID;
 
+import Equipa2.Incremento2.model.enums.StatusUtilizadores;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,8 @@ public class UtilizadorDTO {
     private String morada;
 
     private UserType userType;  // Define se é Clientem, Profissional ou Admin
+
+    private StatusUtilizadores status;
 
     // Para Cliente
     private MetodoPagamento formaDePagamento;

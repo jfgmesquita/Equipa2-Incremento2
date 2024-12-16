@@ -1,8 +1,12 @@
 package Equipa2.Incremento2.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.List;
 
+import Equipa2.Incremento2.model.Servico;
+import Equipa2.Incremento2.model.dto.PagamentoDTO;
+import Equipa2.Incremento2.model.dto.ServicoDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,6 +49,25 @@ public class PagamentoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Pagamento não encontrado com o ID: " + id));
     }
 
+    public PagamentoDTO findDTOById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID não pode ser nulo.");
+        }
+
+        Pagamento pag = pagamentoRepository.findById(id).get();
+
+
+        return new PagamentoDTO(
+                pag.getId(),
+                pag.getValor(),
+                pag.getSolicitacao().getId(),
+                pag.getOrigemCliente().getId(),
+                pag.getDestinoProfissional().getId(),
+                pag.getStatus(),
+                (int) (pag.getValor() / pag.getSolicitacao().getServico().getValorHora())
+        );
+    }
+
     /**
      * Guarda um pagamento.
      *
@@ -52,43 +75,53 @@ public class PagamentoService {
      * @return o pagamento guardado
      * @throws IllegalArgumentException se o pagamento for nulo
      */
-    public Pagamento save(Pagamento pagamento) {
+    public PagamentoDTO save(Pagamento pagamento) {
         if (pagamento == null) {
             throw new IllegalArgumentException("Pagamento não pode ser nulo.");
         }
 
-        return pagamentoRepository.save(pagamento);
+        pagamentoRepository.save(pagamento);
+
+        return new PagamentoDTO(
+                pagamento.getId(),
+                pagamento.getValor(),
+                pagamento.getSolicitacao().getId(),
+                pagamento.getOrigemCliente().getId(),
+                pagamento.getDestinoProfissional().getId(),
+                pagamento.getStatus(),
+                0
+        );
     }
 
-    /**
-     * Atualiza um pagamento.
-     *
-     * @param id o ID do pagamento a ser atualizado
-     * @param pagamentoDetails os detalhes do pagamento a serem atualizados
-     * @return o pagamento atualizado
-     * @throws IllegalArgumentException se o ID ou os detalhes do pagamento forem nulos
-     * @throws ResourceNotFoundException se o pagamento não for encontrado
-     */
-    public Pagamento update(UUID id, Pagamento pagamentoDetails) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID não pode ser nulo.");
-        }
-
-        if (pagamentoDetails == null) {
-            throw new IllegalArgumentException("Detalhes do pagamento não podem ser nulos.");
-        }
-
-        Pagamento pagamento = pagamentoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pagamento não encontrado com o ID: " + id));
-
-        pagamento.setValor(pagamentoDetails.getValor());
-        pagamento.setOrigemCliente(pagamentoDetails.getOrigemCliente());
-        pagamento.setDestinoProfissional(pagamentoDetails.getDestinoProfissional());
-        pagamento.setMetodo(pagamentoDetails.getMetodo());
-        pagamento.setStatus(pagamentoDetails.getStatus());
-
-        return pagamentoRepository.save(pagamento);
-    }
+//    /**
+//     * Atualiza um pagamento.
+//     *
+//     * @param id o ID do pagamento a ser atualizado
+//     * @param pagamentoDetails os detalhes do pagamento a serem atualizados
+//     * @return o pagamento atualizado
+//     * @throws IllegalArgumentException se o ID ou os detalhes do pagamento forem nulos
+//     * @throws ResourceNotFoundException se o pagamento não for encontrado
+//     */
+//    public Pagamento update(UUID id, Pagamento pagamentoDetails) {
+//        if (id == null) {
+//            throw new IllegalArgumentException("ID não pode ser nulo.");
+//        }
+//
+//        if (pagamentoDetails == null) {
+//            throw new IllegalArgumentException("Detalhes do pagamento não podem ser nulos.");
+//        }
+//
+//        Pagamento pagamento = pagamentoRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Pagamento não encontrado com o ID: " + id));
+//
+//        pagamento.setValor(pagamentoDetails.getValor());
+//        pagamento.setOrigemCliente(pagamentoDetails.getOrigemCliente());
+//        pagamento.setDestinoProfissional(pagamentoDetails.getDestinoProfissional());
+//        pagamento.setMetodo(pagamentoDetails.getMetodo());
+//        pagamento.setStatus(pagamentoDetails.getStatus());
+//
+//        return pagamentoRepository.save(pagamento);
+//    }
 
     /**
      * Apaga um pagamento pelo ID.

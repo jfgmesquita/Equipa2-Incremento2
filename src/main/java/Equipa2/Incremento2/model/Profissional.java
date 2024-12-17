@@ -11,7 +11,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import Equipa2.Incremento2.model.enums.MetodoPagamento;
-import Equipa2.Incremento2.model.enums.Servicos;
 import Equipa2.Incremento2.model.enums.UserType;
 
 /**
@@ -25,8 +24,7 @@ import Equipa2.Incremento2.model.enums.UserType;
 public class Profissional extends Utilizador {
 
     @Column(name = "especialidade")
-    @Enumerated(EnumType.STRING)
-    private Servicos especialidade;
+    private TiposServico especialidade;
 
     @Column(name = "experiencia")
     private int experiencia;
@@ -55,7 +53,7 @@ public class Profissional extends Utilizador {
      * @param experiencia a experiência do profissional
      * @param formaDePagamento a forma de pagamento do profissional
      */
-    public Profissional(String nome, String email, String password, String morada, Servicos especialidade, int experiencia, MetodoPagamento formaDePagamento) {
+    public Profissional(String nome, String email, String password, String morada, TiposServico especialidade, int experiencia, MetodoPagamento formaDePagamento) {
         super(nome, email, password, morada, UserType.PROFISSIONAL);
         this.especialidade = especialidade;
         this.experiencia = experiencia;

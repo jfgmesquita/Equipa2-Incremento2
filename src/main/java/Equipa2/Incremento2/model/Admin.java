@@ -9,6 +9,8 @@ import lombok.ToString;
 
 import Equipa2.Incremento2.model.enums.UserType;
 
+import java.util.List;
+
 /**
  * Classe que representa um administrador.
  */
@@ -20,6 +22,9 @@ import Equipa2.Incremento2.model.enums.UserType;
 public class Admin extends Utilizador {
 
     private String codigo;
+
+    @OneToMany(mappedBy = "admin")
+    private List<TiposServico> tiposServicosCriados;
 
     /**
      * Construtor que inicializa um administrador com os dados fornecidos.

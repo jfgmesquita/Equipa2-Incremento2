@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import Equipa2.Incremento2.model.Profissional;
 import Equipa2.Incremento2.model.Servico;
 import Equipa2.Incremento2.model.dto.ServicoDTO;
-import Equipa2.Incremento2.model.enums.Servicos;
 import Equipa2.Incremento2.service.ServicoService;
 import Equipa2.Incremento2.service.UtilizadorService;
 
@@ -53,32 +52,32 @@ public class ServicoController {
         return ResponseEntity.ok(servico);
     }
 
-     /**
-     * Encontra todas os serviços de um tipo.
-     *
-     * @param tipo o tipo do serviço
-     * @return uma lista de todos os serviços com esse tipo
-     */
-    @GetMapping("/tipo")
-    public ResponseEntity<List<ServicoDTO>> getAllServicosByTipo(@RequestParam(value="tipo") Servicos tipo){
-        List<Servico> servicos = servicoService.findAllByTipo(tipo.name());
-
-        List<ServicoDTO> dtos = new ArrayList<>();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        
-        for (Servico ser : servicos) {
-            String formattedDate = ser.getData().format(dtf);
-            dtos.add(new ServicoDTO(
-                    ser.getId(),
-                    ser.getTipo(),
-                    ser.getDescricao(),
-                    formattedDate,
-                    ser.getValorHora(),
-                    utilizadorService.findDTOById(ser.getProfissional().getId())
-            ));
-        }
-        return ResponseEntity.ok().body(dtos);
-    }
+//     /**
+//     * Encontra todas os serviços de um tipo.
+//     *
+//     * @param tipo o tipo do serviço
+//     * @return uma lista de todos os serviços com esse tipo
+//     */
+//    @GetMapping("/tipo")
+//    public ResponseEntity<List<ServicoDTO>> getAllServicosByTipo(@RequestParam(value="tipo") Servicos tipo){
+//        List<Servico> servicos = servicoService.findAllByTipo(tipo.name());
+//
+//        List<ServicoDTO> dtos = new ArrayList<>();
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+//
+//        for (Servico ser : servicos) {
+//            String formattedDate = ser.getData().format(dtf);
+//            dtos.add(new ServicoDTO(
+//                    ser.getId(),
+//                    ser.getTipo(),
+//                    ser.getDescricao(),
+//                    formattedDate,
+//                    ser.getValorHora(),
+//                    utilizadorService.findDTOById(ser.getProfissional().getId())
+//            ));
+//        }
+//        return ResponseEntity.ok().body(dtos);
+//    }
 
     
 
@@ -99,7 +98,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             dtos.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTipo(),
+                    ser.getTipoServico(),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -127,7 +126,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             servicoDTOs.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTipo(),
+                    ser.getTipoServico(),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -151,7 +150,7 @@ public class ServicoController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         Servico ser = new Servico();
-        ser.setTipo(servico.getTipo());
+        ser.setTipoServico(servico.getTipo());
         ser.setDescricao(servico.getDescricao());
         ser.setData(date);
         ser.setValorHora(servico.getValorHora());
@@ -180,7 +179,7 @@ public class ServicoController {
             return ResponseEntity.notFound().build();
         }
 
-        servico.setTipo(servicoDetails.getTipo());
+        servico.setTipoServico(servicoDetails.getTipoServico());
         servico.setDescricao(servicoDetails.getDescricao());
         servico.setData(servicoDetails.getData());
         servico.setValorHora(servicoDetails.getValorHora());

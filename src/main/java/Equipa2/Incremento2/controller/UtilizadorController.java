@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 
-import Equipa2.Incremento2.model.enums.StatusUtilizadores;
+import Equipa2.Incremento2.model.enums.StatusAtivo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +63,7 @@ public class UtilizadorController {
         List<UtilizadorDTO> dtos = new ArrayList<>();
 
         for(Utilizador uti : utilizadores){
-            if(uti.getStatus() == StatusUtilizadores.ATIVO){
+            if(uti.getStatus() == StatusAtivo.ATIVO){
                 dtos.add(
                         new UtilizadorDTO(
                                 uti.getId(),

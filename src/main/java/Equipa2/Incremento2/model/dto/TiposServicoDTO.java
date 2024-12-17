@@ -28,6 +28,4 @@ public class TiposServicoDTO {
 
     private UUID adminId;
 
-    private List<ServicoDTO> servicos;
-
 }

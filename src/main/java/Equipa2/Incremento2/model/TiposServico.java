@@ -21,6 +21,7 @@ public class TiposServico implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "nome", unique = true, nullable = false)
     private String nome;
 
     @Enumerated(EnumType.STRING)

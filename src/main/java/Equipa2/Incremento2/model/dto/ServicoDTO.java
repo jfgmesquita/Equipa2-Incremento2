@@ -19,7 +19,7 @@ public class ServicoDTO {
 
     private UUID id;
     
-    private TiposServico tipo;
+    private TiposServicoDTO tipo;
 
     private String descricao;
 

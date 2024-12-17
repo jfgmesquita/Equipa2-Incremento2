@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.List;
 
 import Equipa2.Incremento2.model.enums.StatusAtivo;
+import Equipa2.Incremento2.service.TiposServicoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,9 @@ public class UtilizadorController {
 
     @Autowired
     private UtilizadorService utilizadorService;
+
+    @Autowired
+    private TiposServicoService tiposServicoService;
 
     /**
      * Encontra todos os utilizadores.
@@ -163,7 +167,7 @@ public class UtilizadorController {
             profissional.setMorada(utilizador.getMorada());
             profissional.setUserType(utilizador.getUserType());
             profissional.setFormaDePagamento(utilizador.getFormaDePagamento());
-            profissional.setEspecialidade(utilizador.getEspecialidade());
+            tiposServicoService.getTiposServicoByNome(utilizador.getEspecialidade().getNome());
             profissional.setExperiencia(utilizador.getExperiencia());
             utilizadorService.saveProfissional(profissional);
             return ResponseEntity.ok().body(new UtilizadorDTO(

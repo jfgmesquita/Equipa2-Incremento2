@@ -22,7 +22,7 @@ public interface UtilizadorRepository extends JpaRepository<Utilizador, UUID> {
      * @param email o email do utilizador
      * @return o utilizador com o email fornecido
      */
-    Utilizador findByEmail(String email);
+    public Utilizador findByEmail(String email);
 
      /**
      * Encontra todos os utilizadores por tipo.

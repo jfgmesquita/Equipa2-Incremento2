@@ -24,6 +24,9 @@ public class ServicoService {
     @Autowired
     private UtilizadorService utilizadorService;
 
+    @Autowired
+    private TiposServicoService tiposServicoService;
+
     /**
      * Encontra todos os serviços.
      *
@@ -51,7 +54,7 @@ public class ServicoService {
 
         ServicoDTO servicoDTO = new ServicoDTO();
         servicoDTO.setId(ser.getId());
-        servicoDTO.setTipo(ser.getTipoServico());
+        servicoDTO.setTipo(tiposServicoService.findDTOById(ser.getTipoServico().getId()));
         servicoDTO.setDescricao(ser.getDescricao());
         servicoDTO.setValorHora(ser.getValorHora());
         servicoDTO.setData(formattedDate);

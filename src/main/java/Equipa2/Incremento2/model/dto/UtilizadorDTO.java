@@ -41,6 +41,7 @@ public class UtilizadorDTO {
 
     // Para Profissional
     private TiposServico especialidade;
+
     private int experiencia;
 
     // Para Admin

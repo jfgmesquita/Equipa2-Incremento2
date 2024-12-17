@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import Equipa2.Incremento2.service.TiposServicoService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class ServicoController {
 
     @Autowired
     private UtilizadorService utilizadorService;
+
+    @Autowired
+    private TiposServicoService tiposServicoService;
 
     // @GetMapping
     // public List<ServicoDTO> getAllServicos() {
@@ -98,7 +102,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             dtos.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTipoServico(),
+                    tiposServicoService.findDTOById(ser.getTipoServico().getId()),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -126,7 +130,7 @@ public class ServicoController {
             String formattedDate = ser.getData().format(dtf);
             servicoDTOs.add(new ServicoDTO(
                     ser.getId(),
-                    ser.getTipoServico(),
+                    tiposServicoService.findDTOById(ser.getTipoServico().getId()),
                     ser.getDescricao(),
                     formattedDate,
                     ser.getValorHora(),
@@ -150,7 +154,7 @@ public class ServicoController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         Servico ser = new Servico();
-        ser.setTipoServico(servico.getTipo());
+        ser.setTipoServico(tiposServicoService.getTiposServicoByNome(servico.getTipo().getNome()));
         ser.setDescricao(servico.getDescricao());
         ser.setData(date);
         ser.setValorHora(servico.getValorHora());

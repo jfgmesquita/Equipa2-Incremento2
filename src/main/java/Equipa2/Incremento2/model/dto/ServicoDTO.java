@@ -2,12 +2,11 @@ package Equipa2.Incremento2.model.dto;
 
 import java.util.UUID;
 
+import Equipa2.Incremento2.model.TiposServico;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import Equipa2.Incremento2.model.enums.Servicos;
 
 /**
  * DTO para o serviço, usado para transferir dados através da API.
@@ -20,7 +19,7 @@ public class ServicoDTO {
 
     private UUID id;
     
-    private Servicos tipo;
+    private TiposServicoDTO tipo;
 
     private String descricao;
 

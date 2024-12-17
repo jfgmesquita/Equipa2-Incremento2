@@ -24,6 +24,9 @@ public class ServicoService {
     @Autowired
     private UtilizadorService utilizadorService;
 
+    @Autowired
+    private TiposServicoService tiposServicoService;
+
     /**
      * Encontra todos os serviços.
      *
@@ -51,7 +54,7 @@ public class ServicoService {
 
         ServicoDTO servicoDTO = new ServicoDTO();
         servicoDTO.setId(ser.getId());
-        servicoDTO.setTipo(ser.getTipo());
+        servicoDTO.setTipo(tiposServicoService.findDTOById(ser.getTipoServico().getId()));
         servicoDTO.setDescricao(ser.getDescricao());
         servicoDTO.setValorHora(ser.getValorHora());
         servicoDTO.setData(formattedDate);
@@ -143,7 +146,7 @@ public class ServicoService {
         Servico servico = servicoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado com o ID: " + id));
 
-        servico.setTipo(servicoDetails.getTipo());
+        servico.setTipoServico(servicoDetails.getTipoServico());
         servico.setDescricao(servicoDetails.getDescricao());
         servico.setData(servicoDetails.getData());
         servico.setValorHora(servicoDetails.getValorHora());

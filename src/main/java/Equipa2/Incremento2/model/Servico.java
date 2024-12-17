@@ -10,8 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import Equipa2.Incremento2.model.enums.Servicos;
-
 /**
  * Classe que representa um serviço.
  */
@@ -27,8 +25,9 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Enumerated(EnumType.STRING)
-    private Servicos tipo;
+    @ManyToOne
+    @JoinColumn(name = "tipo_servico_id")
+    private TiposServico tipoServico;
 
     private String descricao;
 
@@ -43,14 +42,14 @@ public class Servico {
     /**
      * Construtor que inicializa um novo serviço com os dados fornecidos.
      *
-     * @param tipo         Tipo de serviço.
+     * @param tipoServico         Tipo de serviço.
      * @param descricao    Descrição do serviço.
      * @param data         Data do serviço.
      * @param valorHora    Valor por hora do serviço.
      * @param profissional Profissional que realizará o serviço.
      */
-    public Servico(Servicos tipo, String descricao, LocalDateTime data, double valorHora, Profissional profissional) {
-        this.tipo = tipo;
+    public Servico(TiposServico tipoServico, String descricao, LocalDateTime data, double valorHora, Profissional profissional) {
+        this.tipoServico = tipoServico;
         this.descricao = descricao;
         this.data = data;
         this.valorHora = valorHora;

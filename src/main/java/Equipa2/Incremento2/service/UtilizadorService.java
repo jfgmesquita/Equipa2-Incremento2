@@ -3,7 +3,7 @@ package Equipa2.Incremento2.service;
 import java.util.UUID;
 import java.util.List;
 
-import Equipa2.Incremento2.model.enums.StatusUtilizadores;
+import Equipa2.Incremento2.model.enums.StatusAtivo;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -155,7 +155,7 @@ public class UtilizadorService {
         if (profissional == null) {
             throw new IllegalArgumentException("Profissional não pode ser nulo.");
         }
-
+        System.out.println(profissional);
         return profissionalRepository.save(profissional);
     }
 
@@ -205,7 +205,7 @@ public class UtilizadorService {
 
 
     public Utilizador disableUtilizador(Utilizador utilizador){
-        utilizador.setStatus(StatusUtilizadores.INATIVO);
+        utilizador.setStatus(StatusAtivo.INATIVO);
         return utilizadorRepository.save(utilizador);
     }
 

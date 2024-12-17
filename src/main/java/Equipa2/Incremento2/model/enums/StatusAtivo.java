@@ -1,6 +1,6 @@
 package Equipa2.Incremento2.model.enums;
 
-public enum StatusUtilizadores {
+public enum StatusAtivo {
     ATIVO,
     INATIVO
 }

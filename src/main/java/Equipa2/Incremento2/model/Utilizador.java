@@ -3,7 +3,7 @@ package Equipa2.Incremento2.model;
 import java.io.Serializable;
 import java.util.UUID;
 
-import Equipa2.Incremento2.model.enums.StatusUtilizadores;
+import Equipa2.Incremento2.model.enums.StatusAtivo;
 import jakarta.persistence.*;
 
 import lombok.NoArgsConstructor;
@@ -42,7 +42,7 @@ public class Utilizador implements Serializable {
     private UserType userType;
 
     @Enumerated(EnumType.STRING)
-    private StatusUtilizadores status;
+    private StatusAtivo status;
 
     /**
      * Construtor que inicializa um novo utilizador com os dados fornecidos.
@@ -60,6 +60,7 @@ public class Utilizador implements Serializable {
         this.password = password;
         this.morada = morada;
         this.userType = userType;
+        this.status = StatusAtivo.ATIVO;
     }
     
 }

@@ -42,7 +42,6 @@ public class Servico {
     
     @ManyToOne
     @JoinColumn(name = "profissional_id")
-    @JsonIgnore
     private Profissional profissional;
 
     /**

@@ -37,12 +37,10 @@ public class Solicitacao {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    @JsonIgnore
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "profissional_id")
-    @JsonIgnore
     private Profissional profissional;
 
     @ManyToOne

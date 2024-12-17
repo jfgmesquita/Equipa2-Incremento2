@@ -155,7 +155,7 @@ public class UtilizadorService {
         if (profissional == null) {
             throw new IllegalArgumentException("Profissional não pode ser nulo.");
         }
-
+        System.out.println(profissional);
         return profissionalRepository.save(profissional);
     }
 

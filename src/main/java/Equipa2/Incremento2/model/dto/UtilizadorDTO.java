@@ -2,7 +2,6 @@ package Equipa2.Incremento2.model.dto;
 
 import java.util.UUID;
 
-import Equipa2.Incremento2.model.TiposServico;
 import Equipa2.Incremento2.model.enums.StatusAtivo;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -40,7 +39,7 @@ public class UtilizadorDTO {
     private MetodoPagamento formaDePagamento;
 
     // Para Profissional
-    private TiposServico especialidade;
+    private String especialidade;
 
     private int experiencia;
 
@@ -101,7 +100,7 @@ public class UtilizadorDTO {
      * @param experiencia a experiência do profissional
      * @return um objeto UtilizadorDTO
      */
-    public UtilizadorDTO(UUID id, String nome, String email, String password, String morada, UserType userType, MetodoPagamento formaDePagamento, TiposServico especialidade, int experiencia){
+    public UtilizadorDTO(UUID id, String nome, String email, String password, String morada, UserType userType, MetodoPagamento formaDePagamento, String especialidade, int experiencia){
         this.id = id;
         this.nome = nome;
         this.email = email;

@@ -167,7 +167,7 @@ public class UtilizadorController {
             profissional.setMorada(utilizador.getMorada());
             profissional.setUserType(utilizador.getUserType());
             profissional.setFormaDePagamento(utilizador.getFormaDePagamento());
-            tiposServicoService.getTiposServicoByNome(utilizador.getEspecialidade().getNome());
+            profissional.setEspecialidade(utilizador.getEspecialidade());
             profissional.setExperiencia(utilizador.getExperiencia());
             utilizadorService.saveProfissional(profissional);
             return ResponseEntity.ok().body(new UtilizadorDTO(
